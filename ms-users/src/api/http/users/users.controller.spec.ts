@@ -8,6 +8,7 @@ import {UsersModel} from '../../../core/model/usersModel';
 import {AddUserDto} from './dto/add-user.dto';
 import {UnknownException} from '../../../core/exception/unknown-exception';
 import {NotFoundException} from '../../../core/exception/not-found-exception';
+import {ChangePasswordUserDto} from './dto/change-password-user.dto';
 
 describe('UsersController', () => {
   let controller: UsersController;
@@ -201,6 +202,45 @@ describe('UsersController', () => {
       expect(result.password).toEqual(outputModel.password);
       expect(result.age).toEqual(outputModel.age);
       expect(result.info).toEqual(outputModel.info);
+    });
+  });
+
+  describe('change password', () => {
+    it('should error when change password for user by id', async () => {
+      const inputId = identifierGeneratorMock.generateId();
+      const body = new ChangePasswordUserDto();
+      body.password = 'new-password';
+      usersService.update.mockResolvedValue([new UnknownException()]);
+      let error;
+
+      try {
+        await controller.updatePassword(inputId, body);
+      } catch (e) {
+        error = e;
+      }
+
+      expect(usersService.update).toBeCalled();
+      expect(usersService.update).toBeCalledWith(expect.objectContaining({
+        id: identifierGeneratorMock.generateId(),
+        password: expect.stringMatching(/[0-9a-z]+/i)
+      }));
+      expect(error).toBeInstanceOf(HttpException);
+    });
+
+    it('should successful change password for user by id', async () => {
+      const inputId = identifierGeneratorMock.generateId();
+      const body = new ChangePasswordUserDto();
+      body.password = 'new-password';
+      usersService.update.mockResolvedValue([null]);
+
+      const result = await controller.updatePassword(inputId, body);
+
+      expect(usersService.update).toBeCalled();
+      expect(usersService.update).toBeCalledWith(expect.objectContaining({
+        id: identifierGeneratorMock.generateId(),
+        password: expect.stringMatching(/[0-9a-z]+/i)
+      }));
+      expect(result).toEqual(true);
     });
   });
 });
