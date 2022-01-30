@@ -168,4 +168,42 @@ describe('UsersServiceService', () => {
       expect(error).toBeNull();
     });
   });
+
+  describe('delete user', () => {
+    it('should error delete user by id when check user exist', async () => {
+      const id = identifierGeneratorMock.generateId();
+      userRepository.getById.mockResolvedValue([new UnknownException()]);
+
+      const [error] = await service.delete(id);
+
+      expect(userRepository.getById).toHaveBeenCalled();
+      expect(error).toBeInstanceOf(UnknownException);
+    });
+
+    it('should error delete user by id', async () => {
+      const id = identifierGeneratorMock.generateId();
+      const outputModel = new UsersModel();
+      userRepository.getById.mockResolvedValue([null, outputModel]);
+      userRepository.delete.mockResolvedValue([new UnknownException()]);
+
+      const [error] = await service.delete(id);
+
+      expect(userRepository.getById).toHaveBeenCalled();
+      expect(userRepository.delete).toHaveBeenCalled();
+      expect(error).toBeInstanceOf(UnknownException);
+    });
+
+    it('should successful update user by id', async () => {
+      const id = identifierGeneratorMock.generateId();
+      const outputModel = new UsersModel();
+      userRepository.getById.mockResolvedValue([null, outputModel]);
+      userRepository.delete.mockResolvedValue([null]);
+
+      const [error] = await service.delete(id);
+
+      expect(userRepository.getById).toHaveBeenCalled();
+      expect(userRepository.delete).toHaveBeenCalled();
+      expect(error).toBeNull();
+    });
+  });
 });

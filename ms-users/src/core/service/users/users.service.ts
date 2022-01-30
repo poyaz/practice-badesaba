@@ -16,8 +16,13 @@ export class UsersService implements IUsersService {
     return this._usersRepository.add(model);
   }
 
-  delete(id: string): Promise<Error[]> {
-    return Promise.resolve([]);
+  async delete(id: string): Promise<Error[]> {
+    const [existError] = await this.getById(id);
+    if (existError) {
+      return [existError as Error];
+    }
+
+    return this._usersRepository.delete(id);
   }
 
   async getAll(): Promise<(Error | UsersModel[])[]> {
@@ -42,6 +47,6 @@ export class UsersService implements IUsersService {
       return [existError as Error];
     }
 
-    return  this._usersRepository.update(model);
+    return this._usersRepository.update(model);
   }
 }
