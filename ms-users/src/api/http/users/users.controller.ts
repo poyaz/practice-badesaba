@@ -87,4 +87,15 @@ export class UsersController {
 
     return true;
   }
+
+  @Get(':id')
+  @HttpCode(HttpStatus.NO_CONTENT)
+  async delete(@Param('id') id: string): Promise<void> {
+    const [error] = await this._usersService.delete(id);
+
+    if (error) {
+      ErrorHandler.throwError(error as Error);
+      return;
+    }
+  }
 }

@@ -309,4 +309,30 @@ describe('UsersController', () => {
       expect(result).toEqual(true);
     });
   });
+
+  describe('delete user', () => {
+    it('should error when delete user by id', async () => {
+      const inputId = identifierGeneratorMock.generateId();
+      usersService.delete.mockResolvedValue([new UnknownException()]);
+      let error;
+
+      try {
+        await controller.delete(inputId);
+      } catch (e) {
+        error = e;
+      }
+
+      expect(usersService.delete).toBeCalled();
+      expect(error).toBeInstanceOf(HttpException);
+    });
+
+    it('should successful delete user by id', async () => {
+      const inputId = identifierGeneratorMock.generateId();
+      usersService.delete.mockResolvedValue([null]);
+
+      await controller.delete(inputId);
+
+      expect(usersService.delete).toBeCalled();
+    });
+  });
 });
