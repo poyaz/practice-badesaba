@@ -223,7 +223,12 @@ describe('UsersController', () => {
       expect(usersService.update).toBeCalled();
       expect(usersService.update).toBeCalledWith(expect.objectContaining({
         id: identifierGeneratorMock.generateId(),
-        password: expect.stringMatching(/[0-9a-z]+/i)
+        username: null,
+        password: expect.stringMatching(/[0-9a-z]+/i),
+        name: null,
+        family: null,
+        age: null,
+        info: null,
       }));
       expect(error).toBeInstanceOf(HttpException);
     });
@@ -239,7 +244,12 @@ describe('UsersController', () => {
       expect(usersService.update).toBeCalled();
       expect(usersService.update).toBeCalledWith(expect.objectContaining({
         id: identifierGeneratorMock.generateId(),
-        password: expect.stringMatching(/[0-9a-z]+/i)
+        username: null,
+        password: expect.stringMatching(/[0-9a-z]+/i),
+        name: null,
+        family: null,
+        age: null,
+        info: null,
       }));
       expect(result).toEqual(true);
     });
