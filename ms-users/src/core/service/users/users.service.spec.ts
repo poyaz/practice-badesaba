@@ -64,7 +64,7 @@ describe('UsersServiceService', () => {
       const [error, result] = await service.getById(id);
 
       expect(userRepository.getById).toHaveBeenCalled();
-      expect(error).toEqual(null);
+      expect(error).toBeNull();
       expect(result).toBeInstanceOf(UsersModel);
     });
   });
@@ -96,8 +96,32 @@ describe('UsersServiceService', () => {
       const [error, result] = await service.getAll();
 
       expect(userRepository.getAll).toHaveBeenCalled();
-      expect(error).toEqual(null);
+      expect(error).toBeNull();
       expect((result as Array<UsersModel>).length).toEqual(1);
+    });
+  });
+
+  describe('add user', () => {
+    it('should error add new user', async () => {
+      const inputModel = new UsersModel();
+      userRepository.add.mockResolvedValue([new UnknownException()]);
+
+      const [error] = await service.add(inputModel);
+
+      expect(userRepository.add).toHaveBeenCalled();
+      expect(error).toBeInstanceOf(UnknownException);
+    });
+
+    it('should successful add new user', async () => {
+      const inputModel = new UsersModel();
+      const outputModel = new UsersModel();
+      userRepository.add.mockResolvedValue([null, outputModel]);
+
+      const [error, result] = await service.add(inputModel);
+
+      expect(userRepository.add).toHaveBeenCalled();
+      expect(error).toBeNull();
+      expect(result).toBeInstanceOf(UsersModel);
     });
   });
 });

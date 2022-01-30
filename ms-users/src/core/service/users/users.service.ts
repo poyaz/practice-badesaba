@@ -12,8 +12,8 @@ export class UsersService implements IUsersService {
   ) {
   }
 
-  add(model: UsersModel): Promise<(Error | UsersModel)[]> {
-    return Promise.resolve([]);
+  async add(model: UsersModel): Promise<(Error | UsersModel)[]> {
+    return this._usersRepository.add(model);
   }
 
   delete(id: string): Promise<Error[]> {
