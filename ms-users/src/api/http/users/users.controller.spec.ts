@@ -9,6 +9,7 @@ import {AddUserDto} from './dto/add-user.dto';
 import {UnknownException} from '../../../core/exception/unknown-exception';
 import {NotFoundException} from '../../../core/exception/not-found-exception';
 import {ChangePasswordUserDto} from './dto/change-password-user.dto';
+import {UpdateUserDto} from './dto/update-user.dto';
 
 describe('UsersController', () => {
   let controller: UsersController;
@@ -239,6 +240,61 @@ describe('UsersController', () => {
       expect(usersService.update).toBeCalledWith(expect.objectContaining({
         id: identifierGeneratorMock.generateId(),
         password: expect.stringMatching(/[0-9a-z]+/i)
+      }));
+      expect(result).toEqual(true);
+    });
+  });
+
+  describe('update user', () => {
+    it('should error when update user by id', async () => {
+      const inputId = identifierGeneratorMock.generateId();
+      const body = new UpdateUserDto();
+      body.name = 'Frank';
+      body.family = 'Woods';
+      body.age = 30;
+      body.info = 'I am soldier.';
+      usersService.update.mockResolvedValue([new UnknownException()]);
+      let error;
+
+      try {
+        await controller.update(inputId, body);
+      } catch (e) {
+        error = e;
+      }
+
+      expect(usersService.update).toBeCalled();
+      expect(usersService.update).toBeCalledWith(expect.objectContaining({
+        id: identifierGeneratorMock.generateId(),
+        username: null,
+        password: null,
+        name: body.name,
+        family: body.family,
+        age: body.age,
+        info: body.info,
+      }));
+      expect(error).toBeInstanceOf(HttpException);
+    });
+
+    it('should successful update user by id', async () => {
+      const inputId = identifierGeneratorMock.generateId();
+      const body = new UpdateUserDto();
+      body.name = 'Frank';
+      body.family = 'Woods';
+      body.age = 30;
+      body.info = 'I am soldier.';
+      usersService.update.mockResolvedValue([null]);
+
+      const result = await controller.update(inputId, body);
+
+      expect(usersService.update).toBeCalled();
+      expect(usersService.update).toBeCalledWith(expect.objectContaining({
+        id: identifierGeneratorMock.generateId(),
+        username: null,
+        password: null,
+        name: body.name,
+        family: body.family,
+        age: body.age,
+        info: body.info,
       }));
       expect(result).toEqual(true);
     });

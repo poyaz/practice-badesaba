@@ -1,4 +1,4 @@
-import {Body, Controller, Get, HttpCode, HttpStatus, Inject, Param, Post} from '@nestjs/common';
+import {Body, Controller, Get, HttpCode, HttpStatus, Inject, Param, Post, Put} from '@nestjs/common';
 import {UsersModel} from '../../../core/model/usersModel';
 import {IUsersService, USERS_SERVICE} from '../../../core/interface/i-users-service.interface';
 import {AddUserDto} from './dto/add-user.dto';
@@ -6,6 +6,8 @@ import {ErrorHandler} from '../errorHandler';
 import {AddUserInputModel} from './mapper/add-user-input-model';
 import {ChangePasswordUserDto} from './dto/change-password-user.dto';
 import {ChangePasswordUserInputModel} from './mapper/change-password-user-input-model';
+import {UpdateUserDto} from './dto/update-user.dto';
+import {UpdateUserInputModel} from './mapper/update-user-input-model';
 
 @Controller('api/v1/users')
 export class UsersController {
@@ -56,11 +58,26 @@ export class UsersController {
     return data as UsersModel;
   }
 
-  @Post(':id/password')
+  @Put(':id/password')
   @HttpCode(HttpStatus.OK)
   async updatePassword(@Param('id') id: string, @Body() passwordDto: ChangePasswordUserDto): Promise<boolean> {
     const changePasswordUserInputModel = new ChangePasswordUserInputModel();
     const model = changePasswordUserInputModel.getModel(id, passwordDto);
+
+    const [error] = await this._usersService.update(model);
+    if (error) {
+      ErrorHandler.throwError(error as Error);
+      return;
+    }
+
+    return true;
+  }
+
+  @Put(':id')
+  @HttpCode(HttpStatus.OK)
+  async update(@Param('id') id: string, @Body() updateDto: UpdateUserDto): Promise<boolean> {
+    const updateUserInputModel = new UpdateUserInputModel();
+    const model = updateUserInputModel.getModel(id, updateDto);
 
     const [error] = await this._usersService.update(model);
     if (error) {
