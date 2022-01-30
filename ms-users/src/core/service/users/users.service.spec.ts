@@ -124,4 +124,48 @@ describe('UsersServiceService', () => {
       expect(result).toBeInstanceOf(UsersModel);
     });
   });
+
+  describe('update user', () => {
+    it('should error update user by id when check user exist', async () => {
+      const inputModel = new UsersModel();
+      inputModel.id = identifierGeneratorMock.generateId();
+      inputModel.age = 30;
+      userRepository.getById.mockResolvedValue([new UnknownException()]);
+
+      const [error] = await service.update(inputModel);
+
+      expect(userRepository.getById).toHaveBeenCalled();
+      expect(error).toBeInstanceOf(UnknownException);
+    });
+
+    it('should error update user by id', async () => {
+      const inputModel = new UsersModel();
+      inputModel.id = identifierGeneratorMock.generateId();
+      inputModel.age = 30;
+      const outputModel = new UsersModel();
+      userRepository.getById.mockResolvedValue([null, outputModel]);
+      userRepository.update.mockResolvedValue([new UnknownException()]);
+
+      const [error] = await service.update(inputModel);
+
+      expect(userRepository.getById).toHaveBeenCalled();
+      expect(userRepository.update).toHaveBeenCalled();
+      expect(error).toBeInstanceOf(UnknownException);
+    });
+
+    it('should successful update user by id', async () => {
+      const inputModel = new UsersModel();
+      inputModel.id = identifierGeneratorMock.generateId();
+      inputModel.age = 30;
+      const outputModel = new UsersModel();
+      userRepository.getById.mockResolvedValue([null, outputModel]);
+      userRepository.update.mockResolvedValue([null]);
+
+      const [error] = await service.update(inputModel);
+
+      expect(userRepository.getById).toHaveBeenCalled();
+      expect(userRepository.update).toHaveBeenCalled();
+      expect(error).toBeNull();
+    });
+  });
 });

@@ -36,7 +36,12 @@ export class UsersService implements IUsersService {
     return [null, data];
   }
 
-  update(model: UsersModel): Promise<Error[]> {
-    return Promise.resolve([]);
+  async update(model: UsersModel): Promise<Error[]> {
+    const [existError] = await this.getById(model.id);
+    if (existError) {
+      return [existError as Error];
+    }
+
+    return  this._usersRepository.update(model);
   }
 }
