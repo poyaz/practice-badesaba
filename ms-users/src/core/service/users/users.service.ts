@@ -20,8 +20,8 @@ export class UsersService implements IUsersService {
     return Promise.resolve([]);
   }
 
-  getAll(): Promise<(Error | UsersModel[])[]> {
-    return Promise.resolve([]);
+  async getAll(): Promise<(Error | UsersModel[])[]> {
+    return this._usersRepository.getAll();
   }
 
   async getById(id: string): Promise<(Error | UsersModel)[]> {

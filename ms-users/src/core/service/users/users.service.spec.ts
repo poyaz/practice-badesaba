@@ -68,4 +68,36 @@ describe('UsersServiceService', () => {
       expect(result).toBeInstanceOf(UsersModel);
     });
   });
+
+  describe('get all users', () => {
+    it('should error get all users', async () => {
+      userRepository.getAll.mockResolvedValue([new UnknownException()]);
+
+      const [error] = await service.getAll();
+
+      expect(userRepository.getAll).toHaveBeenCalled();
+      expect(error).toBeInstanceOf(UnknownException);
+    });
+
+    it('should successful get all users (empty record)', async () => {
+      userRepository.getAll.mockResolvedValue([null, []]);
+
+      const [error, result] = await service.getAll();
+
+      expect(userRepository.getAll).toHaveBeenCalled();
+      expect(error).toEqual(null);
+      expect(result).toEqual([]);
+    });
+
+    it('should successful get all users (with records)', async () => {
+      const outputModel1 = new UsersModel();
+      userRepository.getAll.mockResolvedValue([null, [outputModel1]]);
+
+      const [error, result] = await service.getAll();
+
+      expect(userRepository.getAll).toHaveBeenCalled();
+      expect(error).toEqual(null);
+      expect((result as Array<UsersModel>).length).toEqual(1);
+    });
+  });
 });
