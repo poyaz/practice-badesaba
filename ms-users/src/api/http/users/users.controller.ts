@@ -25,6 +25,18 @@ export class UsersController {
     return result as UsersModel;
   }
 
+  @Get()
+  @HttpCode(HttpStatus.OK)
+  async getAll(): Promise<Array<UsersModel>> {
+    const [error, result] = await this._usersService.getAll();
+    if (error) {
+      ErrorHandler.throwError(error as Error);
+      return;
+    }
+
+    return result as Array<UsersModel>;
+  }
+
   @Post()
   @HttpCode(HttpStatus.CREATED)
   async addUsers(

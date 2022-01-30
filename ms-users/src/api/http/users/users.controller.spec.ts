@@ -102,6 +102,55 @@ describe('UsersController', () => {
     });
   });
 
+  describe('get all users', () => {
+    it('should error get all users', async () => {
+      usersService.getAll.mockResolvedValue([new UnknownException()]);
+      let error;
+
+      try {
+        await controller.getAll();
+      } catch (e) {
+        error = e;
+      }
+
+      expect(usersService.getAll).toHaveBeenCalled();
+      expect(error).toBeInstanceOf(HttpException);
+    });
+
+    it('should successful get all user (empty record)', async () => {
+      usersService.getAll.mockResolvedValue([null, []]);
+
+      const result = await controller.getAll();
+
+      expect(usersService.getAll).toHaveBeenCalled();
+      expect(result).toEqual([]);
+    });
+
+    it('should successful get all user (with records)', async () => {
+      const outputModel1 = new UsersModel();
+      outputModel1.id = identifierGeneratorMock.generateId();
+      outputModel1.name = 'alex';
+      outputModel1.family = 'morgan';
+      outputModel1.username = 'alex042';
+      outputModel1.password = 'hash-password';
+      outputModel1.age = 20;
+      outputModel1.info = '';
+      usersService.getAll.mockResolvedValue([null, [outputModel1]]);
+
+      const result = await controller.getAll();
+
+      expect(usersService.getAll).toHaveBeenCalled();
+      expect(result.length).toEqual(1);
+      expect(result[0].id).toEqual(identifierGeneratorMock.generateId());
+      expect(result[0].name).toEqual(outputModel1.name);
+      expect(result[0].family).toEqual(outputModel1.family);
+      expect(result[0].username).toEqual(outputModel1.username);
+      expect(result[0].password).toEqual(outputModel1.password);
+      expect(result[0].age).toEqual(outputModel1.age);
+      expect(result[0].info).toEqual(outputModel1.info);
+    });
+  });
+
   describe('add user', () => {
     let addUserDto;
 
