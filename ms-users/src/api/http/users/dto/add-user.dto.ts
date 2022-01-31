@@ -1,12 +1,10 @@
-import {IsAlphanumeric, IsDefined, IsNumber, IsString, Matches, MaxLength, MinLength} from 'class-validator';
+import {IsAlphanumeric, IsDefined, IsEmail, IsNumber, IsString, MinLength} from 'class-validator';
 
 export class AddUserDto {
   @IsDefined()
   @IsString()
-  @MinLength(3)
-  @MaxLength(13)
-  @Matches(/^[a-z]+[0-9a-z.]+$/i)
-  username: string;
+  @IsEmail()
+  email: string;
 
   @IsDefined()
   @IsString()

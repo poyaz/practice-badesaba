@@ -6,8 +6,7 @@ export class UpdateUserInputModel {
   getModel(id: string, body: UpdateUserDto) {
     const model = new UsersModel();
     model.id = id;
-    model.username = null;
-    model.password = null;
+    model.email = null;
     model.name = body.name;
     model.family = body.family;
     model.age = body.age;
