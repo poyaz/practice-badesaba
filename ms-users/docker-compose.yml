@@ -9,5 +9,5 @@ services:
     user: node
     working_dir: /home/node
     restart: "always"
-    command: "sh -c 'npm run start:prod'"
+    command: "sh -c 'npm install --only product; npm run start:prod'"
     network_mode: bridge
