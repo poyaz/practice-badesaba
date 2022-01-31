@@ -8,7 +8,6 @@ import {UsersModel} from '../../../core/model/usersModel';
 import {AddUserDto} from './dto/add-user.dto';
 import {UnknownException} from '../../../core/exception/unknown-exception';
 import {NotFoundException} from '../../../core/exception/not-found-exception';
-import {ChangePasswordUserDto} from './dto/change-password-user.dto';
 import {UpdateUserDto} from './dto/update-user.dto';
 
 describe('UsersController', () => {

@@ -4,8 +4,6 @@ import {IUsersService, USERS_SERVICE} from '../../../core/interface/i-users-serv
 import {AddUserDto} from './dto/add-user.dto';
 import {ErrorHandler} from '../errorHandler';
 import {AddUserInputModel} from './mapper/add-user-input-model';
-import {ChangePasswordUserDto} from './dto/change-password-user.dto';
-import {ChangePasswordUserInputModel} from './mapper/change-password-user-input-model';
 import {UpdateUserDto} from './dto/update-user.dto';
 import {UpdateUserInputModel} from './mapper/update-user-input-model';
 
