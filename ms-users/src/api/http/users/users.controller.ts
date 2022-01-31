@@ -1,4 +1,4 @@
-import {Body, Controller, Get, HttpCode, HttpStatus, Inject, Param, Post, Put} from '@nestjs/common';
+import {Body, Controller, Delete, Get, HttpCode, HttpStatus, Inject, Param, Post, Put} from '@nestjs/common';
 import {UsersModel} from '../../../core/model/usersModel';
 import {IUsersService, USERS_SERVICE} from '../../../core/interface/i-users-service.interface';
 import {AddUserDto} from './dto/add-user.dto';
@@ -71,7 +71,7 @@ export class UsersController {
     return {result: true};
   }
 
-  @Get(':id')
+  @Delete(':id')
   @HttpCode(HttpStatus.NO_CONTENT)
   async delete(@Param('id') id: string): Promise<void> {
     const [error] = await this._usersService.delete(id);
