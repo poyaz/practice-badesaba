@@ -5,7 +5,8 @@ import {IIdentifierGenerator, IDENTIFIER_GENERATOR} from '../../core/interface/i
 import {USERS_REPOSITORY} from '../../core/interface/i-user-repository.interface';
 import {UsersModel} from '../../core/model/usersModel';
 import {ExistException} from '../../core/exception/exist-exception';
-
+import {ModelIdNotExistException} from '../../core/exception/model-id-not-exist-exception';
+import {NotFoundException} from '../../core/exception/not-found-exception';
 
 describe('FakeUsersRepository', () => {
   let repository: FakeUserRepository;
@@ -124,10 +125,48 @@ describe('FakeUsersRepository', () => {
     });
   });
 
-  // describe('update user', () => {
-  //   it('should error when user not found', async () => {
-  //     const model =
-  //     await repository.update()
-  //   });
-  // });
+  describe('update user', () => {
+    it('should error update user when id not declare', async () => {
+      const model = new UsersModel();
+
+      const [error] = await repository.update(model);
+
+      expect(error).toBeInstanceOf(ModelIdNotExistException);
+    });
+
+    it('should error update user when user not found', async () => {
+      const model = new UsersModel();
+      model.id = identifierGeneratorMock.generateId();
+
+      const [error] = await repository.update(model);
+
+      expect(error).toBeInstanceOf(NotFoundException);
+    });
+
+    it('should successful update user', async () => {
+      const model = new UsersModel();
+      model.id = identifierGeneratorMock.generateId();
+      model.name = 'root';
+      model.family = 'root';
+      model.age = 30;
+      model.info = '';
+      dataListMock.push({
+        id: identifierGeneratorMock.generateId(),
+        email: 'admin@example.com',
+        name: 'admin',
+        family: 'admin',
+        age: 20,
+        info: 'I am system administrator',
+      });
+
+      const [error] = await repository.update(model);
+
+      expect(error).toBeNull();
+      expect(dataListMock[0].email).toEqual('admin@example.com');
+      expect(dataListMock[0].name).toEqual(model.name);
+      expect(dataListMock[0].family).toEqual(model.family);
+      expect(dataListMock[0].age).toEqual(model.age);
+      expect(dataListMock[0].info).toEqual(model.info);
+    });
+  });
 });
