@@ -10,6 +10,7 @@ export class ErrorHandler {
         statusCode = HttpStatus.BAD_REQUEST;
         break;
       case ExceptionEnum.NOT_FOUND_ERROR:
+      case ExceptionEnum.MODEL_ID_NOT_EXIST_ERROR:
         statusCode = HttpStatus.NOT_FOUND;
         break;
       default:
