@@ -8,7 +8,7 @@ import {UpdateUserDto} from './dto/update-user.dto';
 import {UpdateUserInputModel} from './mapper/update-user-input-model';
 
 @Controller('api/v1/users')
-export class UsersController {
+export class UsersHttpController {
   constructor(
     @Inject(USERS_SERVICE)
     private readonly _usersService: IUsersService
@@ -41,7 +41,7 @@ export class UsersController {
 
   @Post()
   @HttpCode(HttpStatus.CREATED)
-  async addUsers(
+  async addUser(
     @Body() addUserDto: AddUserDto,
   ): Promise<UsersModel> {
     const addUserInputModel = new AddUserInputModel();

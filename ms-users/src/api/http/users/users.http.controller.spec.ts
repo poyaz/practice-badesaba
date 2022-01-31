@@ -1,7 +1,7 @@
 import {Test, TestingModule} from '@nestjs/testing';
 import {HttpCode, HttpException, HttpStatus} from '@nestjs/common';
 import {mock, MockProxy} from 'jest-mock-extended';
-import {UsersController} from './users.controller';
+import {UsersHttpController} from './users.http.controller';
 import {IUsersService, USERS_SERVICE} from '../../../core/interface/i-users-service.interface';
 import {IIdentifierGenerator} from '../../../core/interface/i-identifier-generator.interface';
 import {UsersModel} from '../../../core/model/usersModel';
@@ -11,7 +11,7 @@ import {NotFoundException} from '../../../core/exception/not-found-exception';
 import {UpdateUserDto} from './dto/update-user.dto';
 
 describe('UsersController', () => {
-  let controller: UsersController;
+  let controller: UsersHttpController;
   // let usersService: jest.Mocked<IUsersService>;
   let usersService: MockProxy<IUsersService>;
   let identifierGeneratorMock: MockProxy<IIdentifierGenerator>;
@@ -23,7 +23,7 @@ describe('UsersController', () => {
     identifierGeneratorMock.generateId.mockReturnValue('00000000-0000-0000-0000-000000000000');
 
     const module: TestingModule = await Test.createTestingModule({
-      controllers: [UsersController],
+      controllers: [UsersHttpController],
       providers: [
         {
           provide: USERS_SERVICE,
@@ -32,7 +32,7 @@ describe('UsersController', () => {
       ]
     }).compile();
 
-    controller = module.get<UsersController>(UsersController);
+    controller = module.get<UsersHttpController>(UsersHttpController);
     // usersService = module.get<jest.Mocked<IUsersService>>(USERS_SERVICE);
   });
 
@@ -167,7 +167,7 @@ describe('UsersController', () => {
       let error;
 
       try {
-        await controller.addUsers(body);
+        await controller.addUser(body);
       } catch (e) {
         error = e;
       }
@@ -187,7 +187,7 @@ describe('UsersController', () => {
       outputModel.info = addUserDto.info;
       usersService.add.mockResolvedValue([null, outputModel]);
 
-      const result = await controller.addUsers(body);
+      const result = await controller.addUser(body);
 
       expect(usersService.add).toHaveBeenCalled();
       expect(result.id).toEqual(identifierGeneratorMock.generateId());
