@@ -29,8 +29,9 @@
     "class-transformer": "^0.5.1",
     "rimraf": "^3.0.2",
     "rxjs": "^7.2.0",
-    "config": "^3.3.7",
-    "uuid": "^8.3.2"
+    "config": "3.2.6",
+    "uuid": "^8.3.2",
+    "boolean": "^3.1.4"
   },
   "devDependencies": {
     "@nestjs/cli": "^8.0.0",
