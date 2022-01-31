@@ -249,7 +249,7 @@ describe('UsersController', () => {
         age: body.age,
         info: body.info,
       }));
-      expect(result).toEqual(true);
+      expect(result).toEqual({result: true});
     });
   });
 

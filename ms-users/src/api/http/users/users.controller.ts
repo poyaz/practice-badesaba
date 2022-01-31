@@ -60,7 +60,7 @@ export class UsersController {
 
   @Put(':id')
   @HttpCode(HttpStatus.OK)
-  async update(@Param('id') id: string, @Body() updateDto: UpdateUserDto): Promise<boolean> {
+  async update(@Param('id') id: string, @Body() updateDto: UpdateUserDto): Promise<{ result: boolean }> {
     const updateUserInputModel = new UpdateUserInputModel();
     const model = updateUserInputModel.getModel(id, updateDto);
 
@@ -70,7 +70,7 @@ export class UsersController {
       return;
     }
 
-    return true;
+    return {result: true};
   }
 
   @Get(':id')
