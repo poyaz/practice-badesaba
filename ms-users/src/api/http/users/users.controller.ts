@@ -58,21 +58,6 @@ export class UsersController {
     return data as UsersModel;
   }
 
-  @Put(':id/password')
-  @HttpCode(HttpStatus.OK)
-  async updatePassword(@Param('id') id: string, @Body() passwordDto: ChangePasswordUserDto): Promise<boolean> {
-    const changePasswordUserInputModel = new ChangePasswordUserInputModel();
-    const model = changePasswordUserInputModel.getModel(id, passwordDto);
-
-    const [error] = await this._usersService.update(model);
-    if (error) {
-      ErrorHandler.throwError(error as Error);
-      return;
-    }
-
-    return true;
-  }
-
   @Put(':id')
   @HttpCode(HttpStatus.OK)
   async update(@Param('id') id: string, @Body() updateDto: UpdateUserDto): Promise<boolean> {

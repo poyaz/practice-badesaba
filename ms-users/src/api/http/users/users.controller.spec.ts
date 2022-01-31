@@ -85,8 +85,7 @@ describe('UsersController', () => {
       outputModel.id = identifierGeneratorMock.generateId();
       outputModel.name = 'alex';
       outputModel.family = 'morgan';
-      outputModel.username = 'alex042';
-      outputModel.password = 'hash-password';
+      outputModel.email = 'alex042@example.com';
       outputModel.age = 20;
       outputModel.info = '';
       usersService.getById.mockResolvedValue([null, outputModel]);
@@ -97,8 +96,7 @@ describe('UsersController', () => {
       expect(result.id).toEqual(identifierGeneratorMock.generateId());
       expect(result.name).toEqual(outputModel.name);
       expect(result.family).toEqual(outputModel.family);
-      expect(result.username).toEqual(outputModel.username);
-      expect(result.password).toEqual(outputModel.password);
+      expect(result.email).toEqual(outputModel.email);
       expect(result.age).toEqual(outputModel.age);
       expect(result.info).toEqual(outputModel.info);
     });
@@ -133,8 +131,7 @@ describe('UsersController', () => {
       outputModel1.id = identifierGeneratorMock.generateId();
       outputModel1.name = 'alex';
       outputModel1.family = 'morgan';
-      outputModel1.username = 'alex042';
-      outputModel1.password = 'hash-password';
+      outputModel1.email = 'alex042@example.com';
       outputModel1.age = 20;
       outputModel1.info = '';
       usersService.getAll.mockResolvedValue([null, [outputModel1]]);
@@ -146,8 +143,7 @@ describe('UsersController', () => {
       expect(result[0].id).toEqual(identifierGeneratorMock.generateId());
       expect(result[0].name).toEqual(outputModel1.name);
       expect(result[0].family).toEqual(outputModel1.family);
-      expect(result[0].username).toEqual(outputModel1.username);
-      expect(result[0].password).toEqual(outputModel1.password);
+      expect(result[0].email).toEqual(outputModel1.email);
       expect(result[0].age).toEqual(outputModel1.age);
       expect(result[0].info).toEqual(outputModel1.info);
     });
@@ -158,7 +154,7 @@ describe('UsersController', () => {
 
     beforeAll(() => {
       addUserDto = new AddUserDto();
-      addUserDto.username = 'alex042';
+      addUserDto.username = 'alex042@example.com';
       addUserDto.password = 'my-password';
       addUserDto.name = 'alex';
       addUserDto.family = 'morgan';
@@ -187,8 +183,7 @@ describe('UsersController', () => {
       outputModel.id = identifierGeneratorMock.generateId();
       outputModel.name = addUserDto.name;
       outputModel.family = addUserDto.family;
-      outputModel.username = addUserDto.username;
-      outputModel.password = 'hash-password';
+      outputModel.email = addUserDto.username;
       outputModel.age = addUserDto.age;
       outputModel.info = addUserDto.info;
       usersService.add.mockResolvedValue([null, outputModel]);
@@ -199,59 +194,9 @@ describe('UsersController', () => {
       expect(result.id).toEqual(identifierGeneratorMock.generateId());
       expect(result.name).toEqual(outputModel.name);
       expect(result.family).toEqual(outputModel.family);
-      expect(result.username).toEqual(outputModel.username);
-      expect(result.password).toEqual(outputModel.password);
+      expect(result.email).toEqual(outputModel.email);
       expect(result.age).toEqual(outputModel.age);
       expect(result.info).toEqual(outputModel.info);
-    });
-  });
-
-  describe('change password', () => {
-    it('should error when change password for user by id', async () => {
-      const inputId = identifierGeneratorMock.generateId();
-      const body = new ChangePasswordUserDto();
-      body.password = 'new-password';
-      usersService.update.mockResolvedValue([new UnknownException()]);
-      let error;
-
-      try {
-        await controller.updatePassword(inputId, body);
-      } catch (e) {
-        error = e;
-      }
-
-      expect(usersService.update).toBeCalled();
-      expect(usersService.update).toBeCalledWith(expect.objectContaining({
-        id: identifierGeneratorMock.generateId(),
-        username: null,
-        password: expect.stringMatching(/[0-9a-z]+/i),
-        name: null,
-        family: null,
-        age: null,
-        info: null,
-      }));
-      expect(error).toBeInstanceOf(HttpException);
-    });
-
-    it('should successful change password for user by id', async () => {
-      const inputId = identifierGeneratorMock.generateId();
-      const body = new ChangePasswordUserDto();
-      body.password = 'new-password';
-      usersService.update.mockResolvedValue([null]);
-
-      const result = await controller.updatePassword(inputId, body);
-
-      expect(usersService.update).toBeCalled();
-      expect(usersService.update).toBeCalledWith(expect.objectContaining({
-        id: identifierGeneratorMock.generateId(),
-        username: null,
-        password: expect.stringMatching(/[0-9a-z]+/i),
-        name: null,
-        family: null,
-        age: null,
-        info: null,
-      }));
-      expect(result).toEqual(true);
     });
   });
 
@@ -275,8 +220,7 @@ describe('UsersController', () => {
       expect(usersService.update).toBeCalled();
       expect(usersService.update).toBeCalledWith(expect.objectContaining({
         id: identifierGeneratorMock.generateId(),
-        username: null,
-        password: null,
+        email: null,
         name: body.name,
         family: body.family,
         age: body.age,
@@ -299,8 +243,7 @@ describe('UsersController', () => {
       expect(usersService.update).toBeCalled();
       expect(usersService.update).toBeCalledWith(expect.objectContaining({
         id: identifierGeneratorMock.generateId(),
-        username: null,
-        password: null,
+        email: null,
         name: body.name,
         family: body.family,
         age: body.age,
