@@ -7,7 +7,7 @@ import {UnknownException} from '../../exception/unknown-exception';
 import {NotFoundException} from '../../exception/not-found-exception';
 import {UsersModel} from '../../model/usersModel';
 
-describe('UsersServiceService', () => {
+describe('UsersService', () => {
   let service: UsersService;
   let userRepository: MockProxy<IUserRepositoryInterface>;
   let identifierGeneratorMock: MockProxy<IIdentifierGenerator>;
