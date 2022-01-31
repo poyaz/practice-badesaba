@@ -169,4 +169,31 @@ describe('FakeUsersRepository', () => {
       expect(dataListMock[0].info).toEqual(model.info);
     });
   });
+
+  describe('delete user by id', () => {
+    it('should error delete user when user id not found', async () => {
+      const inputId = identifierGeneratorMock.generateId();
+
+      const [error] = await repository.delete(inputId);
+
+      expect(error).toBeInstanceOf(NotFoundException);
+    });
+
+    it('should successful delete user by id', async () => {
+      const inputId = identifierGeneratorMock.generateId();
+      dataListMock.push({
+        id: identifierGeneratorMock.generateId(),
+        email: 'admin@example.com',
+        name: 'admin',
+        family: 'admin',
+        age: 20,
+        info: 'I am system administrator',
+      });
+
+      const [error] = await repository.delete(inputId);
+
+      expect(error).toBeNull();
+      expect(dataListMock.length).toEqual(0);
+    });
+  });
 });

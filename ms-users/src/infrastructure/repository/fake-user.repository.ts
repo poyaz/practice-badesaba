@@ -30,8 +30,15 @@ export class FakeUserRepository implements IUserRepositoryInterface {
     return [null, result];
   }
 
-  delete(id: string): Promise<Error[]> {
-    return Promise.resolve([]);
+  async delete(id: string): Promise<Error[]> {
+    const findIndex = this._dataList.findIndex((v) => v.id === id);
+    if (findIndex === -1) {
+      return [new NotFoundException()];
+    }
+
+    this._dataList.splice(findIndex, 1);
+
+    return [null];
   }
 
   async getAll(): Promise<(Error | UsersModel[])[]> {
