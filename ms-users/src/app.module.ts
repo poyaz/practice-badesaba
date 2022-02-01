@@ -1,11 +1,12 @@
 import {Module} from '@nestjs/common';
-import {UsersController} from './api/http/users/users.controller';
+import {UsersHttpController} from './api/http/users/users.http.controller';
 import {UsersService} from './core/service/users/users.service';
 import {USERS_SERVICE} from './core/interface/i-users-service.interface';
 import {IDENTIFIER_GENERATOR} from './core/interface/i-identifier-generator.interface';
 import {UuidIdentifierGenerator} from './infrastructure/system/uuid-identifier-generator';
 import {USERS_REPOSITORY} from './core/interface/i-user-repository.interface';
 import {FakeUserRepository} from './infrastructure/repository/fake-user.repository';
+import {UsersMessageController} from './api/message/users/users.message.controller';
 
 const dataList: Array<{ id: string, email: string, name: string, family: string, age: number, info: string }> = [];
 dataList.push({
@@ -18,7 +19,7 @@ dataList.push({
 });
 
 @Module({
-  controllers: [UsersController],
+  controllers: [UsersHttpController, UsersMessageController],
   providers: [
     {
       provide: USERS_SERVICE,
