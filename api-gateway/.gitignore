@@ -11,6 +11,7 @@ docker/docker-compose.local*
 /node_modules
 .npm/
 .config/
+.ash_history
 
 # Logs
 logs
