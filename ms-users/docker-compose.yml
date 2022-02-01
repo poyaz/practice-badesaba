@@ -1,6 +1,6 @@
 version: "2.3"
 services:
-  app:
+  app-users:
     image: node:14.15.1-alpine
     expose:
       - 3000
@@ -10,4 +10,8 @@ services:
     working_dir: /home/node
     restart: "always"
     command: "sh -c 'npm install --only product; npm run start:prod'"
-    network_mode: bridge
+    networks:
+      main: { }
+
+networks:
+  main:
