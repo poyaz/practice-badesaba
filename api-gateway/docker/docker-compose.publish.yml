@@ -1,0 +1,5 @@
+version: "2.3"
+services:
+  gateway:
+    ports:
+      - ${HTTP_PORT:-3000}:3000
