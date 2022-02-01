@@ -1,0 +1,17 @@
+version: "2.3"
+services:
+  gateway:
+    image: node:14.15.1-alpine
+    expose:
+      - 3000
+    volumes:
+      - $PWD:/home/node
+    user: node
+    working_dir: /home/node
+    restart: "always"
+    command: "sh -c 'npm install --only product; npm run start:prod'"
+    networks:
+      main: {}
+
+networks:
+  main:

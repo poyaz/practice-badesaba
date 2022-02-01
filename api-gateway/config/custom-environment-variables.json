@@ -1,0 +1,24 @@
+{
+  "server": {
+    "host": "SERVER_HOST",
+    "http": {
+      "port": "SERVER_HTTP_PORT"
+    },
+    "https": {
+      "port": "SERVER_HTTPS_PORT",
+      "force": "SERVER_HTTPS_FORCE"
+    }
+  },
+  "service": {
+    "users": {
+      "host": "SERVICE_USERS_HOST",
+      "port": "SERVICE_USERS_PORT"
+    }
+  },
+  "custom": {
+    "timezone": {
+      "locales": "TIMEZONE_LOCALES",
+      "zone": "TIMEZONE_ZONE"
+    }
+  }
+}
