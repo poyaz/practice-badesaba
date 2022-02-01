@@ -7,6 +7,9 @@
     "https": {
       "port": "SERVER_HTTPS_PORT",
       "force": "SERVER_HTTPS_FORCE"
+    },
+    "rpc": {
+      "port": "SERVER_RPC_PORT"
     }
   },
   "custom": {
