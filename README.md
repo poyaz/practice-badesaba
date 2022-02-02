@@ -121,10 +121,10 @@ If you don't use docker you have to do below step:
 4. open file **env/app/.env**
 5. change environment variable `SERVER_HTTP_PORT` for http server
 6. change environment variable `SERVER_RPC_PORT` for rpc server
-7. execute this command: `npm install --only prod; npm run build; npm run start:prod`
+7. execute this command: `npm install; npm run build; npm run start:prod`
 8. go to `api-gateway`
 9. copy `env/app/.env.example` to`env/app/.env`
 10. open file **env/app/.env**
 11. change environment variable `SERVER_HTTP_PORT` for http server
 12. change environment variable `SERVICE_USERS_PORT` for connect to **users** microservice via rpc (Variable should equal with step 6)
-13. execute this command: `npm install --only prod; npm run build; npm run start:prod`
+13. execute this command: `npm install; npm run build; npm run start:prod`
