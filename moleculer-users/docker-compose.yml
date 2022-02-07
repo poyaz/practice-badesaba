@@ -1,0 +1,28 @@
+version: "2.3"
+services:
+  users:
+    build:
+      context: .
+    image: moleculer-users
+    environment:
+      SERVICES: "*.service.js"
+    networks:
+      - main
+
+  nats:
+    image: nats:2
+    networks:
+      - main
+
+  mongo:
+    image: mongo:4
+    volumes:
+      - data:/data/db
+    networks:
+      - main
+
+networks:
+  main:
+
+volumes:
+  data:

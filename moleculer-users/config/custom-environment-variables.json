@@ -1,0 +1,13 @@
+{
+	"database": {
+		"mongo": {
+			"url": "MONGO_URI"
+		}
+	},
+	"moleculer": {
+		"transporter": {
+			"type": "MOLECULER_TRANSPORTER_TYPE",
+			"url": "MOLECULER_TRANSPORTER_URL"
+		}
+	}
+}

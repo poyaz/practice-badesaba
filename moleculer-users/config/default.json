@@ -1,0 +1,13 @@
+{
+	"database": {
+		"mongo": {
+			"url": "mongodb://mongo/moleculer-users"
+		}
+	},
+	"moleculer": {
+		"transporter": {
+			"type": "NATS",
+			"url": "nats://nats:4222"
+		}
+	}
+}

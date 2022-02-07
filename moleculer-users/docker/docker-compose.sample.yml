@@ -1,0 +1,16 @@
+version: "2.3"
+services:
+  users:
+    environment:
+      SERVICES: "*.service.js"
+      NAMESPACE:
+      LOGGER: true
+      LOGLEVEL: info
+      SERVICEDIR: services
+      MONGO_URI: mongodb://mongo/moleculer-users
+      MOLECULER_TRANSPORTER_TYPE:
+      MOLECULER_TRANSPORTER_URL: nats://nats:4222
+
+  nats:
+    ports:
+      - 4222:4222
