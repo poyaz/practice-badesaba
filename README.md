@@ -103,7 +103,7 @@ call users.create --@email test@example.com --@name test --@family test --@age 2
 call users.update --@id <your-document-id> --@name test-change --@family test-change --@age 18
 ```
 
-* name: `users.update`
+* name: `users.delete`
 
 ```bash
 call users.delete --@id <your-document-id>
