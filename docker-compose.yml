@@ -1,0 +1,53 @@
+version: "2.3"
+services:
+  gateway:
+    image: node:14.15.1-alpine
+    expose:
+      - 3000
+    ports:
+      - ${HTTP_PORT:-3000}:3000
+    volumes:
+      - $PWD/api-gateway:/home/node
+    user: node
+    working_dir: /home/node
+    restart: "always"
+    command: "sh -c 'npm install; npm run build; npm run start:prod'"
+    networks:
+      - main
+
+  users:
+    build:
+      dockerfile: moleculer-users/Dockerfile
+      context: moleculer-users
+    image: moleculer-users
+    environment:
+      SERVICES: "*.service.js"
+      NAMESPACE:
+      LOGGER: true
+      LOGLEVEL: info
+      SERVICEDIR: services
+      MONGO_URI: mongodb://mongo/moleculer-users
+      MOLECULER_TRANSPORTER_TYPE:
+      MOLECULER_TRANSPORTER_URL: nats://nats:4222
+    networks:
+      - main
+
+  nats:
+    image: nats:2
+    ports:
+      - 4222:4222
+    networks:
+      - main
+
+  mongo:
+    image: mongo:4
+    volumes:
+      - data:/data/db
+    networks:
+      - main
+
+networks:
+  main:
+
+volumes:
+  data:
