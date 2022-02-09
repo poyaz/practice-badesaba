@@ -10,7 +10,12 @@
     }
   },
   "service": {
-    "users": {
+    "ms_users": {
+      "protocol": "tcp",
+      "host": "app-users",
+      "port": 8888
+    },
+    "moleculer_users": {
       "protocol": "nats",
       "host": "nats",
       "port": 4222

@@ -27,7 +27,9 @@
     "@nestjs/platform-express": "^8.0.0",
     "boolean": "^3.1.4",
     "config": "3.2.6",
+    "moleculer": "^0.14.19",
     "nats": "^2.6.0",
+    "nestjs-moleculer": "^1.0.5",
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.2",
     "rxjs": "^7.2.0"

@@ -10,10 +10,13 @@
     }
   },
   "service": {
-    "users": {
-      "protocol": "SERVICE_USERS_PROTOCOL",
-      "host": "SERVICE_USERS_HOST",
-      "port": "SERVICE_USERS_PORT"
+    "ms_users": {
+      "host": "SERVICE_MS_USERS_HOST",
+      "port": "SERVICE_MS_USERS_PORT"
+    },
+    "moleculer_users": {
+      "host": "SERVICE_MOLECULER_USERS_HOST",
+      "port": "SERVICE_MOLECULER_USERS_PORT"
     }
   },
   "custom": {

@@ -1,9 +1,11 @@
 import {Inject, Injectable} from '@nestjs/common';
 import {ClientProxy} from '@nestjs/microservices';
-import {catchError} from 'rxjs';
+import {IUsersServiceInterface} from './interface/i-users-service.interface';
 
 @Injectable()
-export class UsersService {
+export class MsUsersService implements IUsersServiceInterface {
+  type = 'MS';
+
   constructor(
     @Inject('MS_USERS')
     private readonly _clientMsUsers: ClientProxy,

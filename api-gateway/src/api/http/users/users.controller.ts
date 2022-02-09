@@ -4,19 +4,25 @@ import {
   Delete,
   Get,
   HttpCode,
-  HttpStatus,
+  HttpStatus, Inject,
   Param,
   Post,
   Put,
-  UseInterceptors
+  UseInterceptors,
 } from '@nestjs/common';
-import {UsersService} from '../../../core/users.service';
 import {TransformInterceptor} from '../middleware/transform.interceptor';
+import {IUsersServiceInterface, USERS_SERVICE} from '../../../core/interface/i-users-service.interface';
 
 @Controller('api/v1/users')
 @UseInterceptors(TransformInterceptor)
 export class UsersController {
-  constructor(private readonly _usersService: UsersService) {
+  private readonly _usersService;
+
+  constructor(
+    @Inject(USERS_SERVICE)
+      usersService: Array<IUsersServiceInterface>,
+  ) {
+    this._usersService = usersService.filter((v) => v.type === 'MOLECULER')[0];
   }
 
   @Get(':id')
