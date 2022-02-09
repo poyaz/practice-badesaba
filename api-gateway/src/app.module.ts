@@ -4,8 +4,8 @@ import {UsersController} from './api/http/users/users.controller';
 import {MsUsersService} from './core/ms-users.service';
 import {MoleculerUsersService} from './core/moleculer-users.service';
 import {Config} from './module/config';
-import {USERS_SERVICE} from '../dist/core/interface/i-users.interface';
 import {MoleculerModule} from 'nestjs-moleculer';
+import {USERS_SERVICE} from './core/interface/i-users-service.interface';
 
 const MS_USERS_HOST = Config.getStr('service.ms_users.host', '127.0.0.1');
 const MS_USERS_PORT = Config.getNum('service.ms_users.port', 8888);
