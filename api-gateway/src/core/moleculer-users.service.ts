@@ -25,8 +25,8 @@ export class MoleculerUsersService implements IUsersServiceInterface, OnModuleIn
       const result = await this._broker.call(pattern, payload);
 
       return {result: result as Array<Object>};
-    } catch (error) {
-      return {error};
+    } catch (e) {
+      return {error: e};
     }
   }
 
@@ -38,8 +38,8 @@ export class MoleculerUsersService implements IUsersServiceInterface, OnModuleIn
       const result = await this._broker.call(pattern, payload);
 
       return {result};
-    } catch (error) {
-      return {error};
+    } catch (e) {
+      return {error: MoleculerUsersService.errorHandler(e)};
     }
   }
 
@@ -50,8 +50,8 @@ export class MoleculerUsersService implements IUsersServiceInterface, OnModuleIn
       const result = await this._broker.call(pattern, body);
 
       return {result};
-    } catch (error) {
-      return {error};
+    } catch (e) {
+      return {error: MoleculerUsersService.errorHandler(e)};
     }
   }
 
@@ -62,9 +62,9 @@ export class MoleculerUsersService implements IUsersServiceInterface, OnModuleIn
     try {
       const result = await this._broker.call(pattern, payload);
 
-      return {result};
-    } catch (error) {
-      return {error};
+      return {result: {result}};
+    } catch (e) {
+      return {error: MoleculerUsersService.errorHandler(e)};
     }
   }
 
@@ -73,11 +73,33 @@ export class MoleculerUsersService implements IUsersServiceInterface, OnModuleIn
     const payload = {id};
 
     try {
-      const result = await this._broker.call(pattern, payload);
+      await this._broker.call(pattern, payload);
 
-      return {result};
-    } catch (error) {
-      return {error};
+      return {};
+    } catch (e) {
+      return {error: MoleculerUsersService.errorHandler(e)};
     }
+  }
+
+  private static errorHandler(e) {
+    const error = new Error(e);
+    if (e.type === 'VALIDATION_ERROR' && e.data.length > 0) {
+      error['response'] = {
+        statusCode: 400,
+        message: e.data.map((v) => v.message),
+        error: 'Bad Request',
+      };
+      error['status'] = 400;
+    } else if (e.type === 'EXIST_ERROR') {
+      error['response'] = {
+        statusCode: e.code,
+        error: e.message.toString(),
+      };
+      error['status'] = e.code;
+    }
+    error.message = error.message.toString().replace(/MoleculerError: /, '');
+    error.name = undefined;
+
+    return error;
   }
 }
