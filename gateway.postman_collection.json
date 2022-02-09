@@ -1,0 +1,173 @@
+{
+	"info": {
+		"_postman_id": "3d3d3c59-bdc1-4947-a7e1-5f0b6e0f270b",
+		"name": "gateway",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get all users",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://{{HTTP_HOST}}:{{HOST_PORT}}/api/v1/users",
+					"protocol": "http",
+					"host": [
+						"{{HTTP_HOST}}"
+					],
+					"port": "{{HOST_PORT}}",
+					"path": [
+						"api",
+						"v1",
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get user by id",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://{{HTTP_HOST}}:{{HOST_PORT}}/api/v1/users/:id",
+					"protocol": "http",
+					"host": [
+						"{{HTTP_HOST}}"
+					],
+					"port": "{{HOST_PORT}}",
+					"path": [
+						"api",
+						"v1",
+						"users",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "00000000-0000-0000-0000-000000000000"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add new user",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\": \"test@example.com\",\n    \"name\": \"test\",\n    \"family\": \"test\",\n    \"age\": 20,\n    \"info\": \"my info\"\n}"
+				},
+				"url": {
+					"raw": "http://{{HTTP_HOST}}:{{HOST_PORT}}/api/v1/users",
+					"protocol": "http",
+					"host": [
+						"{{HTTP_HOST}}"
+					],
+					"port": "{{HOST_PORT}}",
+					"path": [
+						"api",
+						"v1",
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update user",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"root\",\n    \"family\": \"root\",\n    \"age\": 20,\n    \"info\": \"Update my info\"\n}"
+				},
+				"url": {
+					"raw": "http://{{HTTP_HOST}}:{{HOST_PORT}}/api/v1/users/:id",
+					"protocol": "http",
+					"host": [
+						"{{HTTP_HOST}}"
+					],
+					"port": "{{HOST_PORT}}",
+					"path": [
+						"api",
+						"v1",
+						"users",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "00000000-0000-0000-0000-000000000000"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete user",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://{{HTTP_HOST}}:{{HOST_PORT}}/api/v1/users/:id",
+					"protocol": "http",
+					"host": [
+						"{{HTTP_HOST}}"
+					],
+					"port": "{{HOST_PORT}}",
+					"path": [
+						"api",
+						"v1",
+						"users",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "00000000-0000-0000-0000-000000000000"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
